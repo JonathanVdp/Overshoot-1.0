@@ -5,7 +5,7 @@ description:
 This script is a Maya script that creates a custom window tool to apply overshoot animation to objects in Maya. 
 The script creates a window with a UI that includes sliders for Interpolation Factor and Amplitude Factor, 
 checkboxes to select which attributes to animate (Translate X, Y, Z, Rotate X, Y, Z), 
-and a checkbox for Reverse Curve. When the Overshoot button is clicked, 
+and a checkbox for the special key color. When the Overshoot button is clicked, 
 the script will apply overshoot animation to the selected objects based on the values set in the UI. 
 The overshoot animation is achieved by setting keyframes on the selected attributes and then adding an amplitude factor to the value of the attribute based on the sine of the interpolation factor. 
 The resulting animation will have a characteristic overshoot and settling effect
