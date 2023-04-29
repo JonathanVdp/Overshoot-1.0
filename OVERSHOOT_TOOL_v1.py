@@ -5,7 +5,7 @@ description:
 This script is a Maya script that creates a custom window tool to apply overshoot animation to objects in Maya. 
 The script creates a window with a UI that includes sliders for Interpolation Factor and Amplitude Factor, 
 checkboxes to select which attributes to animate (Translate X, Y, Z, Rotate X, Y, Z), 
-and a checkbox for the special key color. When the Overshoot button is clicked, 
+and a checkbox for Reverse Curve. When the Overshoot button is clicked, 
 the script will apply overshoot animation to the selected objects based on the values set in the UI. 
 The overshoot animation is achieved by setting keyframes on the selected attributes and then adding an amplitude factor to the value of the attribute based on the sine of the interpolation factor. 
 The resulting animation will have a characteristic overshoot and settling effect
@@ -63,9 +63,12 @@ def apply_overshoot(direction):
             next_key = cmds.findKeyframe(obj, attribute=attr, which="next", time=(current_frame,))
 
             if previous_key is not None and next_key is not None:
-                prev_value = cmds.keyframe(obj, attribute=attr, query=True, time=(previous_key, previous_key), eval=True)[0]
-                next_value = cmds.keyframe(obj, attribute=attr, query=True, time=(next_key, next_key), eval=True)[0]
+                prev_value_list = cmds.keyframe(obj, attribute=attr, query=True, time=(previous_key, previous_key), eval=True)
+                next_value_list = cmds.keyframe(obj, attribute=attr, query=True, time=(next_key, next_key), eval=True)
                 current_value = cmds.getAttr(obj + "." + attr)
+            if prev_value_list is not None and next_value_list is not None:
+                prev_value = prev_value_list[0]
+                next_value = next_value_list[0]
 
                 velocity = (next_value - prev_value) * direction
                 overshoot_value = calculate_overshoot(current_value, velocity, float(intensity))
