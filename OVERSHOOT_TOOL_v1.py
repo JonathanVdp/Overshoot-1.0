@@ -115,7 +115,7 @@ def create_window():
 
     global slider, color_checkbox, translate_checkboxes, rotate_checkboxes, color_checkboxes, check_all, intensity_slider
 
-    # Set colors based on Piet Mondrian's art
+    # Set colors
     bg_color = [0.4, 0.6, 0.4]
     section_color = [0.8, 0.8, 0.8]
 
