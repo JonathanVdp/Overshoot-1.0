@@ -56,7 +56,7 @@ def apply_overshoot(direction):
                 continue
 
             if not cmds.checkBox(attribute_checkboxes[attr], query=True, value=True):
-                # Skip attributes that are not checked
+                
                 continue
 
             previous_key = cmds.findKeyframe(obj, attribute=attr, which="previous", time=(current_frame,))
