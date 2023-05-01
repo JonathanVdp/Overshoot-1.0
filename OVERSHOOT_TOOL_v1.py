@@ -62,13 +62,10 @@ def apply_overshoot(direction):
             previous_key = cmds.findKeyframe(obj, attribute=attr, which="previous", time=(current_frame,))
             next_key = cmds.findKeyframe(obj, attribute=attr, which="next", time=(current_frame,))
 
-            if previous_key is not None and next_key is not None:
-                prev_value_list = cmds.keyframe(obj, attribute=attr, query=True, time=(previous_key, previous_key), eval=True)
-                next_value_list = cmds.keyframe(obj, attribute=attr, query=True, time=(next_key, next_key), eval=True)
-                current_value = cmds.getAttr(obj + "." + attr)
-            if prev_value_list is not None and next_value_list is not None:
-                prev_value = prev_value_list[0]
-                next_value = next_value_list[0]
+            if previous_key is not None and next_key is not None and previous_key != next_key:
+                prev_value = cmds.getAttr(obj + "." + attr, time=previous_key)
+                next_value = cmds.getAttr(obj + "." + attr, time=next_key)
+                current_value = cmds.getAttr(obj + "." + attr, time=current_frame)
 
                 velocity = (next_value - prev_value) * direction
                 overshoot_value = calculate_overshoot(current_value, velocity, float(intensity))
@@ -78,7 +75,7 @@ def apply_overshoot(direction):
         if obj_data:
             objects_data[obj] = obj_data
 
-    cmds.select(selected_objects) # sauvegarde la selection
+    cmds.select(selected_objects)  # sauvegarde la selection
 
     for obj, obj_data in objects_data.items():
         cmds.select(obj)
@@ -93,7 +90,7 @@ def apply_overshoot(direction):
             '''
             mel.eval(mel_script)
 
-    cmds.select(selected_objects) # restaure la selection
+    cmds.select(selected_objects)  # restaure la selection
     cmds.refresh()
 
 def overshoot_positive(*args):
@@ -115,9 +112,9 @@ def create_window():
 
     global slider, color_checkbox, translate_checkboxes, rotate_checkboxes, color_checkboxes, check_all, intensity_slider
 
-    # Set colors
-    bg_color = [0.4, 0.6, 0.4]
-    section_color = [0.8, 0.8, 0.8]
+    # Set colors based on Piet Mondrian's art
+    bg_color = [0.4, 0.6, 0.4]  # light grey
+    section_color = [0.8, 0.8, 0.8]  # red
 
     cmds.columnLayout(adjustableColumn=True, rowSpacing=10, bgc=bg_color)
 
