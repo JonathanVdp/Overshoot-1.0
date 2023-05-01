@@ -46,13 +46,13 @@ def apply_overshoot(direction):
     for obj in selected_objects:
         attrs = cmds.listAttr(obj, keyable=True, st=["translate*", "rotate*"])
         if attrs is None:
-            # Skip objects with no translation or rotation attributes
+            
             continue
 
         obj_data = {}
         for attr in attrs:
             if attr not in ["translateX", "translateY", "translateZ", "rotateX", "rotateY", "rotateZ"]:
-                # Skip attributes that are not relevant
+               
                 continue
 
             if not cmds.checkBox(attribute_checkboxes[attr], query=True, value=True):
@@ -75,7 +75,7 @@ def apply_overshoot(direction):
         if obj_data:
             objects_data[obj] = obj_data
 
-    cmds.select(selected_objects)  # sauvegarde la selection
+    cmds.select(selected_objects) 
 
     for obj, obj_data in objects_data.items():
         cmds.select(obj)
@@ -90,7 +90,7 @@ def apply_overshoot(direction):
             '''
             mel.eval(mel_script)
 
-    cmds.select(selected_objects)  # restaure la selection
+    cmds.select(selected_objects) 
     cmds.refresh()
 
 def overshoot_positive(*args):
@@ -112,9 +112,9 @@ def create_window():
 
     global slider, color_checkbox, translate_checkboxes, rotate_checkboxes, color_checkboxes, check_all, intensity_slider
 
-    # Set colors based on Piet Mondrian's art
-    bg_color = [0.4, 0.6, 0.4]  # light grey
-    section_color = [0.8, 0.8, 0.8]  # red
+    
+    bg_color = [0.4, 0.6, 0.4] 
+    section_color = [0.8, 0.8, 0.8] 
 
     cmds.columnLayout(adjustableColumn=True, rowSpacing=10, bgc=bg_color)
 
